@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "590409890798",
+    "project_id": "axiosprototipo",
+    "storage_bucket": "axiosprototipo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590409890798:android:72b8c9ff3060dcc8272cff",
+        "android_client_info": {
+          "package_name": "com.axiosprimus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPXGbkh81a8o5MmYJoquO-Q3uinRO-JWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
