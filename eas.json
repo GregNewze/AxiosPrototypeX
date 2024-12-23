@@ -1,0 +1,38 @@
+{
+  "build": {
+    "preview": {
+      "android": {
+        "buildType": "apk",
+        "appVersionSource": "from-package"  // Definindo a versão do app a partir do package.json
+      }
+    },
+    "preview2": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease",
+        "appVersionSource": "from-package"  // Definindo a versão do app a partir do package.json
+      }
+    },
+    "preview3": {
+      "android": {
+        "developmentClient": true,
+        "appVersionSource": "from-package"  // Definindo a versão do app a partir do package.json
+      }
+    },
+    "preview4": {
+      "android": {
+        "distribution": "internal",
+        "appVersionSource": "from-package"  // Definindo a versão do app a partir do package.json
+      }
+    },
+    "production": {
+      "android": {
+        "buildType": "aab",  // Usando Android App Bundle (aab) para publicação
+        "appVersionSource": "from-package",  // Definindo a versão do app a partir do package.json
+        "env": {
+          "API_KEY": "@your-api-key",  // Variáveis de ambiente sensíveis (se necessário)
+          "SECRET_KEY": "@your-secret-key"
+        }
+      }
+    }
+  }
+}
