@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";  // Importando funções do Firebase Authentication
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"; // Importando funções do Firebase Authentication
 import { auth } from "../../config/firebaseConfig"; // Importando a configuração do Firebase
+import { RootStackParamList } from "../types";
+import { MaterialIcons } from '@expo/vector-icons'; // Importando os ícones do MaterialIcons
+import { themas } from "../../global/themas"; // Importando o tema global
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">;
 
@@ -40,9 +43,11 @@ const LoginScreen: React.FC = () => {
     try {
       // Tentando fazer login com Firebase
       await signInWithEmailAndPassword(auth, email, senha);
+      console.log("Login realizado com sucesso!"); // Verifique no console se o login foi bem-sucedido
       navigation.navigate("ColetaDeDados");  // Navegar para a próxima tela após login bem-sucedido
     } catch (error) {
       Alert.alert("Erro", "Falha no login. Verifique seu e-mail e senha.");
+      console.error("Erro de login:", error);
     }
   };
 
@@ -57,13 +62,20 @@ const LoginScreen: React.FC = () => {
       <Text style={styles.loginText}>LOGIN</Text>
 
       <View style={styles.loginContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="E-mail"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
+        <View style={styles.inputContainer}>
+          <MaterialIcons
+            name="email"
+            size={23}
+            color={themas.colors.gray}
+            style={styles.icon}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+          />
+        </View>
 
         <View style={styles.inputContainer}>
           <TextInput
@@ -77,7 +89,11 @@ const LoginScreen: React.FC = () => {
             style={styles.eyeIcon}
             onPress={() => setShowPassword((prev) => !prev)}
           >
-            <Text>{showPassword ? "👁️" : "🙈"}</Text>
+            <MaterialIcons
+              name={showPassword ? "visibility" : "visibility-off"}
+              size={23}
+              color={themas.colors.gray}
+            />
           </TouchableOpacity>
         </View>
 
@@ -174,10 +190,15 @@ const styles = StyleSheet.create({
     position: "relative",
     width: "100%",
   },
+  icon: {
+    position: "absolute",
+    left: 313,
+    top: 20,
+  },
   eyeIcon: {
     position: "absolute",
-    right: 15,
-    top: 15,
+    right: 18,
+    top: 20,
   },
   loginButton: {
     width: "60%",

@@ -1,10 +1,24 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  Dimensions,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"; // Importa o Firebase Auth
+import { StackNavigationProp } from "@react-navigation/stack";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { RootStackParamList } from "../types";
+import { MaterialIcons } from "@expo/vector-icons";
+import { themas } from "../../global/themas";
+
+type CadastroScreenNavigationProp = StackNavigationProp<RootStackParamList, "Cadastro">;
 
 const CadastroScreen: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<CadastroScreenNavigationProp>();
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -16,7 +30,7 @@ const CadastroScreen: React.FC = () => {
     return regex.test(email);
   };
 
-  const handleCadastro = () => {
+  const handleCadastro = async () => {
     if (!validateEmail(email)) {
       Alert.alert("Erro", "Por favor, insira um e-mail válido.");
       return;
@@ -30,28 +44,33 @@ const CadastroScreen: React.FC = () => {
       return;
     }
 
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, senha)
-      .then((userCredential) => {
-        // Cadastro bem-sucedido
-        const user = userCredential.user;
-        console.log("Usuário registrado com sucesso:", user);
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+      const user = userCredential.user;
 
-        // Navegar para a tela de coleta de dados após cadastro
-        navigation.navigate("ColetaDeDados");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+      console.log("Usuário registrado com sucesso:", user);
+      Alert.alert("Sucesso", "Cadastro realizado com sucesso! Redirecionando...");
+      navigation.navigate("Login");
+    } catch (error: any) {
+      console.error("Erro no cadastro:", error);
+      const errorCode = error.code;
 
-        if (errorCode === 'auth/email-already-in-use') {
+      switch (errorCode) {
+        case "auth/email-already-in-use":
           Alert.alert("Erro", "Este e-mail já está em uso. Tente outro e-mail.");
-        } else {
-          Alert.alert("Erro", errorMessage);
-        }
-
-        console.error("Erro de cadastro:", errorCode, errorMessage);
-      });
+          break;
+        case "auth/invalid-email":
+          Alert.alert("Erro", "O formato do e-mail é inválido.");
+          break;
+        case "auth/weak-password":
+          Alert.alert("Erro", "A senha é muito fraca. Escolha uma senha mais forte.");
+          break;
+        default:
+          Alert.alert("Erro", "Algo deu errado. Tente novamente mais tarde.");
+          break;
+      }
+    }
   };
 
   return (
@@ -59,24 +78,34 @@ const CadastroScreen: React.FC = () => {
       <View style={styles.ellipse}></View>
       <View style={styles.ellipseSecondary}></View>
       <View style={styles.speechBubble}>
-        <Text style={styles.welcomeText}>Faça seu cadastro para acessar o Axios!</Text>
+        <Text style={styles.welcomeText}>
+          Faça seu cadastro para acessar o Axios!
+        </Text>
       </View>
       <Text style={styles.cadastroText}>CADASTRO</Text>
 
       <View style={styles.cadastroContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Nome"
-          value={nome}
-          onChangeText={setNome}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="E-mail"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
+        <View style={styles.inputContainer}>
+          <MaterialIcons name="account-circle" size={24} color="#aaa" style={styles.account} />
+          <TextInput
+            style={styles.input}
+            placeholder="Nome"
+            value={nome}
+            onChangeText={setNome}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <MaterialIcons name="email" size={23} color={themas.colors.gray} style={styles.icon} />
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+        </View>
+
         <TextInput
           style={styles.input}
           placeholder="Senha"
@@ -196,6 +225,20 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: "#000",
     fontWeight: "bold",
+  },
+  inputContainer: {
+    position: "relative",
+    width: "100%",
+  },
+  icon: {
+    position: "absolute",
+    left: 310,
+    top: 20,
+  },
+  account: {
+    position: "absolute",
+    left: 310,
+    top: 20,
   },
 });
 

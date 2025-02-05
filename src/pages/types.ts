@@ -1,6 +1,15 @@
+//Conjunto de telas (rotas) disponíveis no aplicativo e os parâmetros que cada tela pode receber.
 export type RootStackParamList = {
-  LoadingScreen: undefined;
+  Loading: undefined;
   Login: undefined;
-  cadastro: undefined;
-  coletadedados: undefined; // Adicione esta linha
+  Cadastro: undefined;
+  ColetaDeDados: undefined;
+  MonitoramentoScreen: undefined;
+  RegistroScreen: undefined;
+  DadosScreen: undefined;
+  Sobre: undefined;
+  Perfil:undefined;
+  Calibrar:undefined;
+  HamburguerBar:undefined;
+
 };

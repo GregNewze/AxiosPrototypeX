@@ -2,35 +2,30 @@
   "build": {
     "preview": {
       "android": {
-        "buildType": "apk",
-        "appVersionSource": "from-package"  // Definindo a versão do app a partir do package.json
+        "buildType": "apk"
       }
     },
     "preview2": {
       "android": {
-        "gradleCommand": ":app:assembleRelease",
-        "appVersionSource": "from-package"  // Definindo a versão do app a partir do package.json
+        "gradleCommand": ":app:assembleRelease"
       }
     },
     "preview3": {
       "android": {
-        "developmentClient": true,
-        "appVersionSource": "from-package"  // Definindo a versão do app a partir do package.json
+        "developmentClient": true
       }
     },
     "preview4": {
       "android": {
-        "distribution": "internal",
-        "appVersionSource": "from-package"  // Definindo a versão do app a partir do package.json
+        "distribution": "internal"
       }
     },
     "production": {
       "android": {
-        "buildType": "aab",  // Usando Android App Bundle (aab) para publicação
-        "appVersionSource": "from-package",  // Definindo a versão do app a partir do package.json
+        "buildType": "apk",  // Usando Android App Bundle (aab) para publicação
         "env": {
-          "API_KEY": "@your-api-key",  // Variáveis de ambiente sensíveis (se necessário)
-          "SECRET_KEY": "@your-secret-key"
+          "API_KEY": "AIzaSyAPXGbkh81a8o5MmYJoquO-Q3uinRO-JWg"  // Variáveis de ambiente sensíveis (se necessário)
+        
         }
       }
     }
