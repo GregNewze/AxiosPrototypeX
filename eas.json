@@ -22,9 +22,9 @@
     },
     "production": {
       "android": {
-        "buildType": "apk",  // Usando Android App Bundle (aab) para publicação
+        "buildType": "",  
         "env": {
-          "API_KEY": "AIzaSyAPXGbkh81a8o5MmYJoquO-Q3uinRO-JWg"  // Variáveis de ambiente sensíveis (se necessário)
+          "API_KEY": "" 
         
         }
       }
