@@ -6,12 +6,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Configuração do Firebase com os dados que você forneceu
 const firebaseConfig = {
-  apiKey: "AIzaSyAPXGbkh81a8o5MmYJoquO-Q3uinRO-JWg",  // API Key
-  authDomain: "axiosprototipo.firebaseapp.com", // Substitua com seu domínio de autenticação
-  projectId: "axiosprototipo", // Project ID
-  storageBucket: "axiosprototipo.appspot.com", // Storage Bucket
-  messagingSenderId: "590409890798", // Sender ID
-  appId: "1:590409890798:android:72b8c9ff3060dcc8272cff", 
+  apiKey: "",  // API Key
+  authDomain: "", // Substitua com seu domínio de autenticação
+  projectId: "", // Project ID
+  storageBucket: "", // Storage Bucket
+  messagingSenderId: "", // Sender ID
+  appId: "", 
 };
 
 // Inicializa o Firebase apenas se ainda não foi inicializado
